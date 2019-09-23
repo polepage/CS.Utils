@@ -47,6 +47,8 @@
     <Compile Include="BaseApp\BaseApplication.cs" />
     <Compile Include="Behaviors\DialogAwareClose.cs" />
     <Compile Include="Dialogs\BaseDialogViewModel.cs" />
+    <Compile Include="Dialogs\DialogExtensions.cs" />
+    <Compile Include="Dialogs\DialogParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
