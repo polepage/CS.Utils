@@ -3,6 +3,7 @@ using Prism.Ioc;
 using Prism.Services.Dialogs;
 using Prism.Unity.Ioc;
 using System.Windows;
+using WPF.Utils.Dialogs;
 
 namespace WPF.Utils.BaseApp
 {
@@ -33,7 +34,7 @@ namespace WPF.Utils.BaseApp
         protected virtual void RegisterDialogs()
         {
             Container.Register<IDialogService, DialogService>();
-            //_container.RegisterDialogWindow<DialogHost>();
+            Container.RegisterDialogWindow<DialogHost>();
         }
 
         protected abstract void RegisterViewModelLocator();
