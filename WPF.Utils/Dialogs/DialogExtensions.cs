@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Prism.Services.Dialogs;
 using System;
+using System.Windows;
 
 namespace WPF.Utils.Dialogs
 {
@@ -42,9 +43,52 @@ namespace WPF.Utils.Dialogs
             callback?.Invoke(dialogResult);
         }
 
-        public static ButtonResult ToButtonResult(this bool? result)
+        public static void ShowMessageBox(this IDialogService service, IDialogParameters parameters, Action<IDialogResult> callback)
+        {
+            parameters.TryGetValue(DialogParams.Title, out string title);
+            parameters.TryGetValue(DialogParams.Alert.Buttons, out DialogParams.Alert.AlertButtons buttons);
+            parameters.TryGetValue(DialogParams.Alert.Image, out DialogParams.Alert.AlertImage image);
+            parameters.TryGetValue(DialogParams.Alert.DefaultResult, out ButtonResult defaultResult);
+
+            var dialogResult = new DialogResult(MessageBox.Show(
+                parameters.GetValue<string>(DialogParams.Alert.Content),
+                title,
+                buttons.ToMessageBoxButton(),
+                image.ToMessageBoxImage(),
+                defaultResult.ToMessageBoxResult()
+            ).ToButtonResult());
+
+            callback?.Invoke(dialogResult);
+        }
+
+        private static ButtonResult ToButtonResult(this bool? result)
         {
             return result.GetValueOrDefault() ? ButtonResult.OK : ButtonResult.Cancel;
+        }
+
+        private static ButtonResult ToButtonResult(this MessageBoxResult result)
+        {
+            return (ButtonResult)result;
+        }
+
+        private static MessageBoxResult ToMessageBoxResult(this ButtonResult result)
+        {
+            if (result == ButtonResult.Abort || result == ButtonResult.Ignore || result == ButtonResult.Retry)
+            {
+                return MessageBoxResult.No;
+            }
+
+            return (MessageBoxResult)result;
+        }
+
+        private static MessageBoxButton ToMessageBoxButton(this DialogParams.Alert.AlertButtons button)
+        {
+            return (MessageBoxButton)button;
+        }
+
+        private static MessageBoxImage ToMessageBoxImage(this DialogParams.Alert.AlertImage image)
+        {
+            return (MessageBoxImage)image;
         }
     }
 }

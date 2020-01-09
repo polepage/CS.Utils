@@ -1,9 +1,11 @@
-﻿using Prism.Events;
+﻿using Microsoft.Practices.Unity.Configuration;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
 using Prism.Unity;
 using Prism.Unity.Ioc;
 using System.Windows;
+using Unity;
 using WPF.Utils.Dialogs;
 
 namespace WPF.Utils.BaseApp
@@ -11,6 +13,7 @@ namespace WPF.Utils.BaseApp
     public abstract class BaseApplication: Application
     {
         protected IContainerExtension Container { get; private set; }
+        protected virtual bool LoadExternalConfiguration => false;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -29,7 +32,13 @@ namespace WPF.Utils.BaseApp
 
         private void RegisterContainer()
         {
-            Container = new UnityContainerExtension();
+            IUnityContainer unity = new UnityContainer();
+            if (LoadExternalConfiguration)
+            {
+                unity.LoadConfiguration();
+            }
+
+            Container = new UnityContainerExtension(unity);
             Container.RegisterInstance(Container);
         }
 
