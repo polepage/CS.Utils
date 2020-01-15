@@ -1,0 +1,69 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mb="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:c="clr-namespace:WPF.Utils.Controls"
+                    xmlns:b="clr-namespace:WPF.Utils.Behaviors"
+                    xmlns:t="clr-namespace:WPF.Utils.Templates">
+
+    <ControlTemplate x:Key="tmsTemplate" TargetType="{x:Type c:TemplatedMultiSelector}">
+        <AdornerDecorator>
+            <ComboBox ItemsSource="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem}">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+
+                <ComboBox.ItemTemplateSelector>
+                    <t:ComboBoxTemplateSelector>
+                        <t:ComboBoxTemplateSelector.DropDownItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding}" HorizontalContentAlignment="Stretch"
+                                          ContentTemplate="{Binding ItemTemplate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"
+                                          ContentTemplateSelector="{Binding ItemTemplateSelector, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"
+                                          ContentStringFormat="{Binding ItemStringFormat, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}">
+                                    <mb:Interaction.Triggers>
+                                        <mb:EventTrigger EventName="Checked">
+                                            <t:TemplatedMultiSelectorTrigger Data="{Binding}" Selector="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"/>
+                                        </mb:EventTrigger>
+                                        <mb:EventTrigger EventName="Unchecked">
+                                            <t:TemplatedMultiSelectorTrigger Data="{Binding}" Selector="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"/>
+                                        </mb:EventTrigger>
+                                    </mb:Interaction.Triggers>
+                                    <mb:Interaction.Behaviors>
+                                        <t:TemplatedMultiSelectorCheckboxListener
+                                            Open="{Binding IsDropDownOpen, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"
+                                            Selector="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"/>
+                                    </mb:Interaction.Behaviors>
+                                </CheckBox>
+                            </DataTemplate>
+                        </t:ComboBoxTemplateSelector.DropDownItemTemplate>
+
+                        <t:ComboBoxTemplateSelector.SelectedItemTemplate>
+                            <DataTemplate>
+                                <ItemsControl DisplayMemberPath="{Binding DisplayMemberPath, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"
+                                              ItemTemplate="{Binding SelectedItemTemplate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"
+                                              ItemTemplateSelector="{Binding SelectedItemTemplateSelector, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"
+                                              ItemStringFormat="{Binding SelectedItemStringFormat, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}">
+                                    <mb:Interaction.Behaviors>
+                                        <b:FeedItemsControlFromMultiSelector Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:TemplatedMultiSelector}}}"/>
+                                    </mb:Interaction.Behaviors>
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </t:ComboBoxTemplateSelector.SelectedItemTemplate>
+                    </t:ComboBoxTemplateSelector>
+                </ComboBox.ItemTemplateSelector>
+            </ComboBox>
+        </AdornerDecorator>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type c:TemplatedMultiSelector}">
+        <Setter Property="Template" Value="{StaticResource tmsTemplate}"/>
+    </Style>
+</ResourceDictionary>
