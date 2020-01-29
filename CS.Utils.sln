@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Utils", "CS.Utils\CS.Uti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Utils.Unity", "CS.Utils.Unity\CS.Utils.Unity.csproj", "{1420DF86-CE33-4DAB-8AED-53D09988B934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Utils", "WPF.Utils\WPF.Utils.csproj", "{97FC94A8-5331-4064-A2CD-6F35B5685AAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF.Utils", "WPF.Utils\WPF.Utils.csproj", "{97FC94A8-5331-4064-A2CD-6F35B5685AAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Droid.Utils", "Droid.Utils\Droid.Utils.csproj", "{0626784C-EB6E-4894-9E5D-A2FE61FF0771}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{97FC94A8-5331-4064-A2CD-6F35B5685AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97FC94A8-5331-4064-A2CD-6F35B5685AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97FC94A8-5331-4064-A2CD-6F35B5685AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0626784C-EB6E-4894-9E5D-A2FE61FF0771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0626784C-EB6E-4894-9E5D-A2FE61FF0771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0626784C-EB6E-4894-9E5D-A2FE61FF0771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0626784C-EB6E-4894-9E5D-A2FE61FF0771}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
