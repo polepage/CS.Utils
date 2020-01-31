@@ -27,7 +27,7 @@ namespace CS.Utils.Network
         public void Dispose()
         {
             _running = false;
-            _udp.Close();
+            _udp.Send(new byte[0], 0, new IPEndPoint(IPAddress.Loopback, Protocol.DiscoveryPort));
             _udp.Dispose();
         }
 
@@ -41,7 +41,7 @@ namespace CS.Utils.Network
 
                 if (buffer == null || buffer.Length == 0)
                 {
-                    return;
+                    continue;
                 }
 
                 if (Protocol.TryDecodeProbeMessage(buffer, out string remoteId) && Message.ServiceId.Equals(remoteId))
