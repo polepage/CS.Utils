@@ -9,4 +9,8 @@
     <PackageReference Include="Unity.Container" Version="5.11.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CS.Utils\CS.Utils.csproj" />
+  </ItemGroup>
+
 </Project>
