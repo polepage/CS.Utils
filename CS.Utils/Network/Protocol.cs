@@ -104,7 +104,7 @@ namespace CS.Utils.Network
 
         private static string InternalDecode(byte[] data, int index, out int length)
         {
-            length = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(data.Take(LengthSize).ToArray(), index));
+            length = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(data.Skip(index).Take(LengthSize).ToArray(), 0));
             return Encoding.UTF8.GetString(data.Skip(LengthSize + index).Take(length).ToArray());
         }
     }
