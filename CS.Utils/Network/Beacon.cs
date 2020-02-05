@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 
 namespace CS.Utils.Network
 {
     public class Beacon: IDisposable
     {
         private readonly UdpClient _udp;
-
-        private bool _running;
 
         public Beacon(string serviceId, ushort port, string serviceName)
         {
@@ -19,36 +16,36 @@ namespace CS.Utils.Network
             _udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _udp.AllowNatTraversal(true);
 
-            Task.Run(Receive);
+            _udp.BeginReceive(Receive, null);
         }
 
         public BeaconMessage Message { get; }
 
         public void Dispose()
         {
-            _running = false;
-            _udp.Send(new byte[0], 0, new IPEndPoint(IPAddress.Loopback, Protocol.DiscoveryPort));
             _udp.Dispose();
         }
 
-        private void Receive()
+        private void Receive(IAsyncResult asyncResult)
         {
-            _running = true;
-            while(_running)
+            try
             {
                 var remote = new IPEndPoint(IPAddress.Any, 0);
-                byte[] buffer = _udp.Receive(ref remote);
+                byte[] buffer = _udp.EndReceive(asyncResult, ref remote);
 
-                if (buffer == null || buffer.Length == 0)
-                {
-                    continue;
-                }
-
-                if (Protocol.TryDecodeProbeMessage(buffer, out string remoteId) && Message.ServiceId.Equals(remoteId))
+                if (buffer != null && buffer.Length > 0 &&
+                    Protocol.TryDecodeProbeMessage(buffer, out string remoteId) &&
+                    Message.ServiceId.Equals(remoteId))
                 {
                     byte[] response = Protocol.Encode(Message);
                     _udp.Send(response, response.Length, remote);
                 }
+
+                _udp.BeginReceive(Receive, null);
+            }
+            catch (ObjectDisposedException)
+            {
+                // Normal behavior of UdpClient/Socket to throw when closed.
             }
         }
     }

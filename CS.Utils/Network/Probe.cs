@@ -14,7 +14,6 @@ namespace CS.Utils.Network
         private readonly UdpClient _udp;
         private readonly ObservableCollection<BeaconLocation> _locations;
 
-        private bool _receiving;
         private bool _searching;
 
         public event NotifyCollectionChangedEventHandler CollectionChanged
@@ -33,7 +32,7 @@ namespace CS.Utils.Network
 
             _locations = new ObservableCollection<BeaconLocation>();
 
-            Task.Run(Receive);
+            _udp.BeginReceive(Receive, null);
             Task.Run(Search);
         }
 
@@ -42,29 +41,29 @@ namespace CS.Utils.Network
 
         public void Dispose()
         {
-            _receiving = false;
             _searching = false;
-            _udp.Close();
             _udp.Dispose();
         }
 
-        private void Receive()
+        private void Receive(IAsyncResult asyncResult)
         {
-            _receiving = true;
-            while (_receiving)
+            try
             {
                 var remote = new IPEndPoint(IPAddress.Any, 0);
-                byte[] buffer = _udp.Receive(ref remote);
+                byte[] buffer = _udp.EndReceive(asyncResult, ref remote);
 
-                if (buffer == null || buffer.Length == 0)
-                {
-                    return;
-                }
-
-                if (Protocol.TryDecodeBeaconMessage(buffer, out BeaconMessage message) && ServiceId.Equals(message.ServiceId))
+                if (buffer != null && buffer.Length > 0 &&
+                    Protocol.TryDecodeBeaconMessage(buffer, out BeaconMessage message) &&
+                    ServiceId.Equals(message.ServiceId))
                 {
                     AddLocation(message, remote);
                 }
+
+                _udp.BeginReceive(Receive, null);
+            }
+            catch (ObjectDisposedException)
+            {
+                // Normal behavior of UdpClient/Socket to throw when closed.
             }
         }
 
@@ -73,12 +72,20 @@ namespace CS.Utils.Network
             _searching = true;
             while (_searching)
             {
-                byte[] service = Protocol.Encode(ServiceId);
-                _udp.Send(service, service.Length, new IPEndPoint(IPAddress.Broadcast, Protocol.DiscoveryPort));
+                try
+                {
+                    byte[] service = Protocol.Encode(ServiceId);
+                    _udp.Send(service, service.Length, new IPEndPoint(IPAddress.Broadcast, Protocol.DiscoveryPort));
 
-                await Task.Delay(2000);
+                    await Task.Delay(2000);
 
-                PruneLocations();
+                    PruneLocations();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Normal behavior of UdpClient/Socket to throw when closed.
+                    _searching = false;
+                }
             }
         }
 
