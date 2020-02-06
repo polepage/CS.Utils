@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CS.Utils.Network
@@ -13,6 +14,7 @@ namespace CS.Utils.Network
     {
         private readonly UdpClient _udp;
         private readonly ObservableCollection<BeaconLocation> _locations;
+        private readonly SynchronizationContext _callerThread;
 
         private bool _searching;
 
@@ -31,6 +33,8 @@ namespace CS.Utils.Network
             _udp.AllowNatTraversal(true);
 
             _locations = new ObservableCollection<BeaconLocation>();
+
+            _callerThread = SynchronizationContext.Current;
 
             _udp.BeginReceive(Receive, null);
             Task.Run(Search);
@@ -91,25 +95,36 @@ namespace CS.Utils.Network
 
         private void AddLocation(BeaconMessage message, IPEndPoint address)
         {
+            // Modifications to the collection are done in the thread that created the Probe
+            // To ensure handler to the CollectionChanged event are not surprised
             var location = new BeaconLocation(message, address);
-            var existingLocation = _locations.First(bl => bl.Equals(location));
-            if (existingLocation != null)
+            _callerThread.Send(s =>
             {
-                existingLocation.RefreshTime();
-            }
-            else
-            {
-                _locations.Add(location);
-            }
+                var existingLocation = _locations.FirstOrDefault(bl => bl.Equals(location));
+                if (existingLocation != null)
+                {
+                    existingLocation.RefreshTime();
+                }
+                else
+                {
+                    
+                    _locations.Add(location);
+                }
+            }, null);
         }
 
         private void PruneLocations()
         {
-            var toRemove = new List<BeaconLocation>(_locations.Where(bl => bl.Timestamp < (DateTime.Now - TimeSpan.FromSeconds(5))));
-            foreach (BeaconLocation location in toRemove)
+            // Modifications to the collection are done in the thread that created the Probe
+            // To ensure handler to the CollectionChanged event are not surprised
+            _callerThread.Send(s =>
             {
-                _locations.Remove(location);
-            }
+                var toRemove = new List<BeaconLocation>(_locations.Where(bl => bl.Timestamp < (DateTime.Now - TimeSpan.FromSeconds(5))));
+                foreach (BeaconLocation location in toRemove)
+                {
+                    _locations.Remove(location);
+                }
+            }, null);
         }
     }
 }
