@@ -97,15 +97,17 @@ namespace CS.Utils.Network
             return InternalDecode(data, index, out int _);
         }
 
-        private static string InternalDecode(byte[] data, out int length)
+        private static string InternalDecode(byte[] data, out int nextIndex)
         {
-            return InternalDecode(data, 0, out length);
+            return InternalDecode(data, 0, out nextIndex);
         }
 
-        private static string InternalDecode(byte[] data, int index, out int length)
+        private static string InternalDecode(byte[] data, int index, out int nextIndex)
         {
-            length = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(data.Skip(index).Take(LengthSize).ToArray(), 0));
-            return Encoding.UTF8.GetString(data.Skip(LengthSize + index).Take(length).ToArray());
+            short stringSize = IPAddress.NetworkToHostOrder(BitConverter.ToInt16(data, index));
+            nextIndex = index + stringSize + LengthSize;
+
+            return Encoding.UTF8.GetString(data, index + LengthSize, stringSize);
         }
     }
 }
