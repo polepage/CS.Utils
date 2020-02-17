@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseApp\DroidApp.cs" />
+    <Compile Include="BaseApp\DroidAppBase.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -66,6 +66,10 @@
     <ProjectReference Include="..\CS.Utils.Unity\CS.Utils.Unity.csproj">
       <Project>{efd4af7b-42a7-45fc-a5e9-544005bd0683}</Project>
       <Name>CS.Utils.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CS.Utils\CS.Utils.csproj">
+      <Project>{E1CDDCD0-4D0A-4B50-AA06-0F6116344EB2}</Project>
+      <Name>CS.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

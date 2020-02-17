@@ -54,6 +54,9 @@
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Prism.Core">
+      <Version>7.2.0.1422</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +64,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CS.Utils.Unity\CS.Utils.Unity.csproj">
+      <Project>{EFD4AF7B-42A7-45FC-A5E9-544005BD0683}</Project>
+      <Name>CS.Utils.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Droid.Utils\Droid.Utils.csproj">
+      <Project>{0626784C-EB6E-4894-9E5D-A2FE61FF0771}</Project>
+      <Name>Droid.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
