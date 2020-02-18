@@ -1,8 +1,6 @@
-﻿using Android.OS;
-
-namespace Droid.Utils.Services
+﻿namespace Droid.Utils.Services
 {
-    public interface IServiceBinder<T>: IBinder
+    public interface IServiceBinder<T>
     {
         T Service { get; }
     }

@@ -53,6 +53,7 @@ namespace Droid.Utils.BaseApp
         protected virtual void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance(_containerExtension);
+            containerRegistry.RegisterInstance<IContainerProvider>(_containerExtension);
             containerRegistry.RegisterInstance(_moduleCatalog);
             containerRegistry.RegisterSingleton<IEventAggregator, EventAggregator>();
             containerRegistry.RegisterSingleton<IModuleInitializer, ModuleInitializer>();
