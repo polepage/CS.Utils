@@ -24,9 +24,12 @@ namespace CS.Utils.Network
             remove { _locations.CollectionChanged -= value; }
         }
 
-        public Probe(string serviceId)
+        public Probe(string serviceId) : this(serviceId, IPAddress.Broadcast) { }
+
+        public Probe(string serviceId, IPAddress broadcastIP)
         {
             ServiceId = serviceId;
+            BroadcastIP = broadcastIP;
 
             _udp = new UdpClient(new IPEndPoint(IPAddress.Any, 0));
             _udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
@@ -46,6 +49,7 @@ namespace CS.Utils.Network
         }
 
         public string ServiceId { get; }
+        public IPAddress BroadcastIP { get; }
         public IReadOnlyCollection<BeaconLocation> Locations => _locations;
 
         public void Dispose()
@@ -84,7 +88,7 @@ namespace CS.Utils.Network
                 try
                 {
                     byte[] service = Protocol.Encode(ServiceId);
-                    _udp.Send(service, service.Length, new IPEndPoint(IPAddress.Broadcast, Protocol.DiscoveryPort));
+                    _udp.Send(service, service.Length, new IPEndPoint(BroadcastIP, Protocol.DiscoveryPort));
 
                     await Task.Delay(2000);
 
