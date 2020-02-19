@@ -33,6 +33,7 @@ namespace CS.Utils.Network
 
             _udp = new UdpClient(new IPEndPoint(IPAddress.Any, 0));
             _udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            _udp.EnableBroadcast = true;
 
             try
             {
