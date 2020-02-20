@@ -79,6 +79,14 @@ namespace CS.Utils.Network
             {
                 // Normal behavior of UdpClient/Socket to throw when closed.
             }
+            catch (SocketException e)
+            {
+                // Interrupted is a possible exception when closing the Probe, let it go.
+                if (e.SocketErrorCode != SocketError.Interrupted)
+                {
+                    throw;
+                }
+            }
         }
 
         private async void Search()
