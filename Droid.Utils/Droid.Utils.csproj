@@ -51,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IServiceBinder.cs" />
     <Compile Include="Services\ServiceBinder.cs" />
+    <Compile Include="Services\ServiceConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
