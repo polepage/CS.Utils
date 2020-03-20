@@ -9,10 +9,15 @@ namespace CS.Utils.Network
         private readonly UdpClient _udp;
 
         public Beacon(string serviceId, ushort port, string serviceName)
+            : this(IPAddress.Any, serviceId, port, serviceName)
+        {
+        }
+
+        public Beacon(IPAddress localIp, string serviceId, ushort port, string serviceName)
         {
             Message = new BeaconMessage(serviceId, port, serviceName);
 
-            _udp = new UdpClient(new IPEndPoint(IPAddress.Any, Protocol.DiscoveryPort));
+            _udp = new UdpClient(new IPEndPoint(localIp, Protocol.DiscoveryPort));
             _udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _udp.AllowNatTraversal(true);
 
