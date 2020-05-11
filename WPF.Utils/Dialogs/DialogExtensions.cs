@@ -7,7 +7,7 @@ namespace WPF.Utils.Dialogs
 {
     public static class DialogExtensions
     {
-        public static void ShowOpenDialog(this IDialogService service, IDialogParameters parameters, Action<IDialogResult> callback)
+        public static void ShowOpenDialog(this IDialogService _, IDialogParameters parameters, Action<IDialogResult> callback)
         {
             var openDialog = new OpenFileDialog
             {
@@ -25,7 +25,7 @@ namespace WPF.Utils.Dialogs
             callback?.Invoke(dialogResult);
         }
 
-        public static void ShowSaveDialog(this IDialogService service, IDialogParameters parameters, Action<IDialogResult> callback)
+        public static void ShowSaveDialog(this IDialogService _, IDialogParameters parameters, Action<IDialogResult> callback)
         {
             var saveDialog = new SaveFileDialog
             {
@@ -43,7 +43,7 @@ namespace WPF.Utils.Dialogs
             callback?.Invoke(dialogResult);
         }
 
-        public static void ShowMessageBox(this IDialogService service, IDialogParameters parameters, Action<IDialogResult> callback)
+        public static void ShowMessageBox(this IDialogService _, IDialogParameters parameters, Action<IDialogResult> callback)
         {
             parameters.TryGetValue(DialogParams.Title, out string title);
             parameters.TryGetValue(DialogParams.Alert.Buttons, out DialogParams.Alert.AlertButtons buttons);
