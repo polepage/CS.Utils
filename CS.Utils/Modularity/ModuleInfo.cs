@@ -51,7 +51,7 @@ namespace CS.Utils.Modularity
         private Collection<string> _dependsOn;
         public Collection<string> DependsOn
         {
-            get => _dependsOn ?? (_dependsOn = new Collection<string>());
+            get => _dependsOn ??= new Collection<string>();
             set => _dependsOn = value;
         }
 
@@ -65,7 +65,7 @@ namespace CS.Utils.Modularity
                 ModuleName = _type.Name;
                 foreach (ModuleDependencyAttribute dependencyAttribute in _type.GetCustomAttributes(typeof(ModuleDependencyAttribute), false))
                 {
-                    var dependency = dependencyAttribute.ModuleName;
+                    string dependency = dependencyAttribute.ModuleName;
                     if (!DependsOn.Contains(dependency))
                     {
                         DependsOn.Add(dependency);
