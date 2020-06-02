@@ -20,34 +20,9 @@ namespace CS.Utils.Console
 
         public IContainerProvider Container => _containerExtension;
 
-        public int RunStartupCommands(ICommandReader reader, out bool doContinue)
+        public int Run(string[] args)
         {
-            int status = 0;
-            doContinue = true;
-            foreach (string[] args in reader.ReadCommands())
-            {
-                if (!_parser.ParseStartupCommand(args, out status))
-                {
-                    doContinue = false;
-                    return status;
-                }
-            }
-
-            return status;
-        }
-
-        public int RunCommands(ICommandReader reader)
-        {
-            int status = 0;
-            foreach (string[] args in reader.ReadCommands())
-            {
-                if (!_parser.ParseCommand(args, out status))
-                {
-                    return status;
-                }
-            }
-
-            return status;
+            return _parser.ParseCommand(args);
         }
 
         public virtual void Dispose() { }

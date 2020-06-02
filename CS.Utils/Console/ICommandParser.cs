@@ -2,7 +2,6 @@
 {
     public interface ICommandParser
     {
-        bool ParseStartupCommand(string[] args, out int status);
-        bool ParseCommand(string[] args, out int status);
+        int ParseCommand(string[] args);
     }
 }
