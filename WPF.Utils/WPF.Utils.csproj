@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Description>WPF Specific Controls and Tools, using Prism.WPF</Description>
+    <Company />
+    <Authors>Pierre Olivier LePage</Authors>
+    <PackageProjectUrl>https://github.com/polepage/CS.Utils</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/polepage/CS.Utils</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Pierre Olivier LePage</Authors>
+    <Company />
+    <Description>C#/Prism Helper Components</Description>
+    <PackageProjectUrl>https://github.com/polepage/CS.Utils</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/polepage/CS.Utils</RepositoryUrl>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
