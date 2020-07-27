@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayAdapterExtensions.cs" />
     <Compile Include="BaseApp\DroidAppBase.cs" />
     <Compile Include="ContextExtensions.cs" />
     <Compile Include="IntentExtensions.cs" />
