@@ -70,13 +70,13 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CS.Utils.Prism\CS.Utils.Prism.csproj">
+      <Project>{f760ae30-a4d6-4a89-81a6-6898fdb7c230}</Project>
+      <Name>CS.Utils.Prism</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CS.Utils.Unity\CS.Utils.Unity.csproj">
       <Project>{efd4af7b-42a7-45fc-a5e9-544005bd0683}</Project>
       <Name>CS.Utils.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CS.Utils\CS.Utils.csproj">
-      <Project>{E1CDDCD0-4D0A-4B50-AA06-0F6116344EB2}</Project>
-      <Name>CS.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
