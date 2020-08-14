@@ -13,9 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Droid.Utils", "Droid.Utils\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Droid.Utils.Unity", "Droid.Utils.Unity\Droid.Utils.Unity.csproj", "{3E0DDB59-ADDC-46C7-8C0F-9551B91D58BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Utils.Prism", "CS.Utils.Prism\CS.Utils.Prism.csproj", "{F760AE30-A4D6-4A89-81A6-6898FDB7C230}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Utils.Prism", "CS.Utils.Prism\CS.Utils.Prism.csproj", "{F760AE30-A4D6-4A89-81A6-6898FDB7C230}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Utils.Network", "CS.Utils.Network\CS.Utils.Network.csproj", "{21ABA820-3A89-4E94-8EBC-BB466E25A36A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Utils.Network", "CS.Utils.Network\CS.Utils.Network.csproj", "{21ABA820-3A89-4E94-8EBC-BB466E25A36A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.Utils", "ASP.Utils\ASP.Utils.csproj", "{DD38590E-6AFB-48B1-8F74-4ABE5B8229BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{21ABA820-3A89-4E94-8EBC-BB466E25A36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21ABA820-3A89-4E94-8EBC-BB466E25A36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21ABA820-3A89-4E94-8EBC-BB466E25A36A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD38590E-6AFB-48B1-8F74-4ABE5B8229BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD38590E-6AFB-48B1-8F74-4ABE5B8229BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD38590E-6AFB-48B1-8F74-4ABE5B8229BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD38590E-6AFB-48B1-8F74-4ABE5B8229BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
